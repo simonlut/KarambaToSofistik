@@ -1,0 +1,275 @@
+ SOFiSTiK AG - Educational-Version -
+ AQUA   - GENERAL CROSS SECTIONS V 2018-7.0           6/28/19           Page:      
+ 
+ Elements
+ 
+    1 +PROG AQUA $Materials and cross-sections
+    2 $ Dat : C:\...\Testing\Crossection_Material_testing.dat  (#001)     28/06/2019
+    3 $ Job : DESKTOP-FBO14I4:000000                                           18:20
+    4 HEAD MATERIAL AND CROSS-SECTION DEFINITIONS
+    5 UNIT 5 $SI - Units
+    6 NORM 'DIN' '1045-1' $German norm
+    7
+    8 MAT TITL STEEL NO 1 E 210000 G 80760 GAM 78.5 ALFA 1E-05
+    9
+   10 SECT 1 MNO 1 TITL IPE400
+   11 PLAT NO 1 YB -90 ZB 393.25 YE 0 ZE 393.25 T 13.5
+   12 NO 2 YB 0 ZB 393.25 YE 90 ZE 393.25 T 13.5
+   13 NO 3 YB 0 ZB 393.25 YE 0 ZE 6.75 T 8.6
+   14 NO 4 YB -90 ZB 6.75 YE 0 ZE 6.75 T 13.5
+   15 NO 5 YB 0 ZB 6.75 YE 90 ZE 6.75 T 13.5
+   16
+   17 END
+ 
+      SOFiSTiK AG - Educational-Version -
+      AQUA   - GENERAL CROSS SECTIONS V 2018-7.0           6/28/19           Page:    51
+ 
+      Elements
+      Material and cross-section definitions
+ 
+ 
+      Default design code is DIN 1045-1 (2001) (Germany) V 2018
+      Klasse(Tab.18): E
+      Wind zone                       : 2  cat. B (Binnenland)
+      Snow load zone                  : 1a
+ 
+      Materials 
+       Mat Classification                  
+         1 STEEL                           
+ 
+      Cross section No.     1 - IPE400 
+ 
+      Static properties of cross section 
+        SNo   Mat       A[m2]      Ay[m2]      Iy[m4]  yc[mm] ysc[mm]  E[N/mm2]  g[kg/m]     I-1[m4]
+              MRf      It[m4]      Az[m2]      Iz[m4]  zc[mm] zsc[mm]  G[N/mm2]              I-2[m4]
+                                  Ayz[m2]     Iyz[m4]                                           α[°]
+          1     1  8.1839E-03   4.050E-03   2.229E-04     0.0     0.0       210     64.2
+                    3.772E-07   3.197E-03   1.312E-05   200.0   200.0        81   (BEAM)
+                = IPE400
+ 
+ SOFiSTiK AG - Educational-Version -
+ SOFiMSHA - FEM EXPORT & IMPORT & GENERATION V 2018-7.0     6/28/19     Page:      
+ 
+ Elements
+ 
+    1 +PROG SOFIMSHA
+    2 $ Dat : C:\...\Testing\Crossection_Material_testing.dat  (#002)     28/06/2019
+    3 $ Job : DESKTOP-FBO14I4:000000                                           18:20
+    4 HEAD ELEMENTS
+    5 UNIT 5
+    6 SYST TYPE 3D GDIR NEGZ GDIV 1000
+    7
+    8 NODE NO 1 X 0 Y 0.041 Z 9.858
+    9 NODE NO 2 X 12.272 Y 0.041 Z 9.858
+   10 NODE NO 3 X 12.272 Y 14.974 Z 9.858
+   11 NODE NO 4 X 0 Y 14.974 Z 9.858
+   12 NODE NO 5 X 0 Y 0.041 Z -0.03  FIX PXPYPZMXMYMZ
+   13 NODE NO 6 X 0 Y 14.974 Z -0.03  FIX PXPYPZMXMYMZ
+   14 NODE NO 7 X 12.272 Y 0.041 Z -0.03  FIX PXPYPZMXMYMZ
+   15 NODE NO 8 X 12.272 Y 14.974 Z -0.03  FIX PXPYPZMXMYMZ
+   16
+   17
+   18 BEAM NO 1 NA 1 NE 2 NCS 1
+   19 BEAM NO 2 NA 3 NE 4 NCS 1
+   20 BEAM NO 3 NA 5 NE 1 NCS 1
+   21 BEAM NO 4 NA 1 NE 4 NCS 1
+   22 BEAM NO 5 NA 4 NE 6 NCS 1
+   23 BEAM NO 6 NA 7 NE 2 NCS 1
+   24 BEAM NO 7 NA 2 NE 3 NCS 1
+   25 BEAM NO 8 NA 3 NE 8 NCS 1
+   26
+   27 END
+ 
+      SOFiSTiK AG - Educational-Version -
+      SOFiMSHA - FEM EXPORT & IMPORT & GENERATION V 2018-7.0     6/28/19     Page:    52
+ 
+      Elements
+ 
+ 
+      Groups 
+       Grp  number Type    min-no    max-no  Designation                      
+         0       8 BEAM         1         8
+ 
+      Nodes 
+       Number      X[m]      Y[m]      Z[m]                Support Conditions               
+            1     0.000     0.041     9.858                                                 
+            2    12.272     0.041     9.858                                                 
+            3    12.272    14.974     9.858                                                 
+            4     0.000    14.974     9.858                                                 
+            5     0.000     0.041    -0.030   PX     PY     PZ     MX     MY     MZ         
+            6     0.000    14.974    -0.030   PX     PY     PZ     MX     MY     MZ         
+            7    12.272     0.041    -0.030   PX     PY     PZ     MX     MY     MZ         
+            8    12.272    14.974    -0.030   PX     PY     PZ     MX     MY     MZ         
+      --------------------------------------------------------------------------------------
+      MIN         0.000     0.041    -0.030
+      MAX        12.272    14.974     9.858
+ 
+      Beam Elements 
+      Grp Number    Node    x[m]    SNo   NoP  E       reference  Properties                                
+        0      1       1   0.000     1         S           0.000                                            
+                       2  12.272     1         S          12.272                                            
+        0      2       3   0.000     1         S           0.000                                            
+                       4  12.272     1         S          12.272                                            
+        0      3       5   0.000     1         S           0.000                                            
+                       1   9.888     1         S           9.888                                            
+        0      4       1   0.000     1         S           0.000                                            
+                       4  14.933     1         S          14.933                                            
+        0      5       4   0.000     1         S           0.000                                            
+                       6   9.888     1         S           9.888                                            
+        0      6       7   0.000     1         S           0.000                                            
+                       2   9.888     1         S           9.888                                            
+        0      7       2   0.000     1         S           0.000                                            
+                       3  14.933     1         S          14.933                                            
+        0      8       3   0.000     1         S           0.000                                            
+                       8   9.888     1         S           9.888                                            
+ 
+      Beam Elements - Extended Properties 
+      Grp Number  length     local y-axis      Eccentricity begin    Eccentricity end      β-y    β-z
+                     [m]                              [mm]                 [mm]        
+        0      1  12.272  0.000 -1.000  0.000                                                        
+        0      2  12.272  0.000  1.000  0.000                                                        
+        0      3   9.888  1.000  0.000  0.000                                                        
+        0      4  14.933  1.000  0.000  0.000                                                        
+        0      5   9.888  1.000  0.000  0.000                                                        
+        0      6   9.888  1.000  0.000  0.000                                                        
+        0      7  14.933  1.000  0.000  0.000                                                        
+        0      8   9.888  1.000  0.000  0.000                                                        
+ 
+      Summary of beam elements 
+ 
+      Groups
+        Grp    TotLength   Max.Length    TotVolume    TotWeight      Surface
+                     [m]          [m]         [m3]          [t]         [m2]
+          0       93.962       14.933        0.769        6.036      140.285
+      ----------------------------------------------------------------------
+      Sum         93.962                     0.769        6.036      140.285
+ 
+ SOFiSTiK AG - Educational-Version -
+ SOFiLOAD - LOAD DEFINITIONS V 2018-7.0             6/28/19             Page:      
+ 
+ Elements
+ 
+    1 +PROG SOFILOAD
+    2 $ Dat : C:\...\Testing\Crossection_Material_testing.dat  (#003)     28/06/2019
+    3 $ Job : DESKTOP-FBO14I4:000000                                           18:20
+    4 HEAD LOADING
+    5 ECHO LOAD
+    6
+    7 LC NO 1
+    8 NODE NO 4 TYPE PP P1 0 P2 0 P3 20
+    9 NODE NO 3 TYPE PP P1 0 P2 0 P3 20
+   10 NODE NO 1 TYPE PP P1 0 P2 0 P3 20
+   11 NODE NO 2 TYPE PP P1 0 P2 0 P3 20
+   12
+   13 END
+ 
+      SOFiSTiK AG - Educational-Version -
+      SOFiLOAD - LOAD DEFINITIONS V 2018-7.0             6/28/19             Page:    53
+ 
+      Elements
+      LOADING
+ 
+ 
+      Load Case      1  
+      Factor forces and moments                 1.000
+ 
+      Loads acting on Nodes 
+         Node     PX[kN]     PY[kN]     PZ[kN]    MX[kNm]    MY[kNm]    MZ[kNm]   MB[kNm2]
+            1                             20.0                                 
+            2                             20.0                                 
+            3                             20.0                                 
+            4                             20.0                                 
+      ------------------------------------------------------------------------------------
+          sum                             80.0                                            
+ 
+ SOFiSTiK AG - Educational-Version -
+ ASE    - ADVANCED SOLUTION ENGINE V 2018-7.0          6/28/19          Page:      
+ 
+ Elements
+ 
+    1 +PROG ASE
+    2 $ Dat : C:\...\Testing\Crossection_Material_testing.dat  (#004)     28/06/2019
+    3 $ Job : DESKTOP-FBO14I4:000000                                           18:20
+    4 HEAD CALCULATIONS
+    5 LC ALL
+    6
+    7 END
+ 
+      SOFiSTiK AG - Educational-Version -
+      ASE    - ADVANCED SOLUTION ENGINE V 2018-7.0          6/28/19          Page:    54
+ 
+      Elements
+      CALCULATIONS
+ 
+ 
+      Load Case      1  
+      Factor forces and moments                 1.000
+ 
+      Loads acting on Nodes 
+         Node     PX[kN]     PY[kN]     PZ[kN]    MX[kNm]    MY[kNm]    MZ[kNm]   MB[kNm2]
+            1                             20.0                                 
+            2                             20.0                                 
+            3                             20.0                                 
+            4                             20.0                                 
+      ------------------------------------------------------------------------------------
+          sum                             80.0                                            
+ 
+      Sum of Loadings                                                                            
+      Loadcase              Σ(Loads)               Designation                            
+                     X[kN]       Y[kN]       Z[kN]                                        
+             1         0.0         0.0        80.0                                        
+ 
+      Beam Forces and Moments Loadcase      1    
+       Grp  Number       x        N       Vy       Vz        Mt        My        Mz
+                       [m]     [kN]     [kN]     [kN]     [kNm]     [kNm]     [kNm]
+         0       1   0.000      0.0     0.00     0.00      0.00      0.00      0.00
+                    12.272      0.0     0.00     0.00      0.00      0.00      0.00
+         0       2   0.000      0.0     0.00     0.00      0.00      0.00      0.00
+                    12.272      0.0     0.00     0.00      0.00      0.00      0.00
+         0       3   0.000     20.0     0.00     0.00      0.00      0.00      0.00
+                     9.888     20.0     0.00     0.00      0.00      0.00      0.00
+         0       4   0.000      0.0     0.00     0.00      0.00      0.00      0.00
+                    14.933      0.0     0.00     0.00      0.00      0.00      0.00
+         0       5   0.000     20.0     0.00     0.00      0.00      0.00      0.00
+                     9.888     20.0     0.00     0.00      0.00      0.00      0.00
+         0       6   0.000     20.0     0.00     0.00      0.00      0.00      0.00
+                     9.888     20.0     0.00     0.00      0.00      0.00      0.00
+         0       7   0.000      0.0     0.00     0.00      0.00      0.00      0.00
+                    14.933      0.0     0.00     0.00      0.00      0.00      0.00
+         0       8   0.000     20.0     0.00     0.00      0.00      0.00      0.00
+                     9.888     20.0     0.00     0.00      0.00      0.00      0.00
+ 
+      Nodal Displacements  Loadcase      1    
+         Node       u-X       u-Y       u-Z     phi-X     phi-Y     phi-Z
+           No      [mm]      [mm]      [mm]    [mrad]    [mrad]    [mrad]
+            1     0.000     0.000   115.069     0.000     0.000     0.000 
+            2     0.000     0.000   115.069     0.000     0.000     0.000 
+            3     0.000     0.000   115.069     0.000     0.000     0.000 
+            4     0.000     0.000   115.069     0.000     0.000     0.000 
+            5     0.000     0.000     0.000     0.000     0.000     0.000 
+            6     0.000     0.000     0.000     0.000     0.000     0.000 
+            7     0.000     0.000     0.000     0.000     0.000     0.000 
+            8     0.000     0.000     0.000     0.000     0.000     0.000 
+ 
+      Nodal Reactions  Loadcase      1    
+         Node       P-X       P-Y       P-Z       M-X       M-Y       M-Z
+           No      [kN]      [kN]      [kN]     [kNm]     [kNm]     [kNm]
+            5       0.0       0.0     -20.0      0.00      0.00      0.00 
+            6       0.0       0.0     -20.0      0.00      0.00      0.00 
+            7       0.0       0.0     -20.0      0.00      0.00      0.00 
+            8       0.0       0.0     -20.0      0.00      0.00      0.00 
+ 
+      SOFiSTiK AG - Educational-Version -
+      ASE    - ADVANCED SOLUTION ENGINE V 2018-7.0          6/28/19          Page:    55
+ 
+      Elements
+      CALCULATIONS
+ 
+ 
+      Sum of Reactions and Loadings                                                              
+      Loadcase            Σ(Reactions)             Designation                            
+                     X[kN]       Y[kN]       Z[kN]                                        
+                            Σ(Loads)                                                      
+             1         0.0         0.0       -80.0 sum_PZ= 80.00 kN               .       
+                       0.0         0.0        80.0                                        
+ 

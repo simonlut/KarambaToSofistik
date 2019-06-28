@@ -1,0 +1,91 @@
+ SOFiSTiK AG - Educational-Version -
+ ASE    - ADVANCED SOLUTION ENGINE V 2018-7.0          6/28/19          Page:      
+ 
+ Elements
+ 
+    1 +PROG ASE
+    2 $ Dat : C:\...\Testing\Crossection_Material_testing.dat  (#004)     28/06/2019
+    3 $ Job : DESKTOP-FBO14I4:000000                                           18:20
+    4 HEAD CALCULATIONS
+    5 LC ALL
+    6
+    7 END
+ 
+      SOFiSTiK AG - Educational-Version -
+      ASE    - ADVANCED SOLUTION ENGINE V 2018-7.0          6/28/19          Page:    54
+ 
+      Elements
+      CALCULATIONS
+ 
+ 
+      Load Case      1  
+      Factor forces and moments                 1.000
+ 
+      Loads acting on Nodes 
+         Node     PX[kN]     PY[kN]     PZ[kN]    MX[kNm]    MY[kNm]    MZ[kNm]   MB[kNm2]
+            1                             20.0                                 
+            2                             20.0                                 
+            3                             20.0                                 
+            4                             20.0                                 
+      ------------------------------------------------------------------------------------
+          sum                             80.0                                            
+ 
+      Sum of Loadings                                                                            
+      Loadcase              Σ(Loads)               Designation                            
+                     X[kN]       Y[kN]       Z[kN]                                        
+             1         0.0         0.0        80.0                                        
+ 
+      Beam Forces and Moments Loadcase      1    
+       Grp  Number       x        N       Vy       Vz        Mt        My        Mz
+                       [m]     [kN]     [kN]     [kN]     [kNm]     [kNm]     [kNm]
+         0       1   0.000      0.0     0.00     0.00      0.00      0.00      0.00
+                    12.272      0.0     0.00     0.00      0.00      0.00      0.00
+         0       2   0.000      0.0     0.00     0.00      0.00      0.00      0.00
+                    12.272      0.0     0.00     0.00      0.00      0.00      0.00
+         0       3   0.000     20.0     0.00     0.00      0.00      0.00      0.00
+                     9.888     20.0     0.00     0.00      0.00      0.00      0.00
+         0       4   0.000      0.0     0.00     0.00      0.00      0.00      0.00
+                    14.933      0.0     0.00     0.00      0.00      0.00      0.00
+         0       5   0.000     20.0     0.00     0.00      0.00      0.00      0.00
+                     9.888     20.0     0.00     0.00      0.00      0.00      0.00
+         0       6   0.000     20.0     0.00     0.00      0.00      0.00      0.00
+                     9.888     20.0     0.00     0.00      0.00      0.00      0.00
+         0       7   0.000      0.0     0.00     0.00      0.00      0.00      0.00
+                    14.933      0.0     0.00     0.00      0.00      0.00      0.00
+         0       8   0.000     20.0     0.00     0.00      0.00      0.00      0.00
+                     9.888     20.0     0.00     0.00      0.00      0.00      0.00
+ 
+      Nodal Displacements  Loadcase      1    
+         Node       u-X       u-Y       u-Z     phi-X     phi-Y     phi-Z
+           No      [mm]      [mm]      [mm]    [mrad]    [mrad]    [mrad]
+            1     0.000     0.000   115.069     0.000     0.000     0.000 
+            2     0.000     0.000   115.069     0.000     0.000     0.000 
+            3     0.000     0.000   115.069     0.000     0.000     0.000 
+            4     0.000     0.000   115.069     0.000     0.000     0.000 
+            5     0.000     0.000     0.000     0.000     0.000     0.000 
+            6     0.000     0.000     0.000     0.000     0.000     0.000 
+            7     0.000     0.000     0.000     0.000     0.000     0.000 
+            8     0.000     0.000     0.000     0.000     0.000     0.000 
+ 
+      Nodal Reactions  Loadcase      1    
+         Node       P-X       P-Y       P-Z       M-X       M-Y       M-Z
+           No      [kN]      [kN]      [kN]     [kNm]     [kNm]     [kNm]
+            5       0.0       0.0     -20.0      0.00      0.00      0.00 
+            6       0.0       0.0     -20.0      0.00      0.00      0.00 
+            7       0.0       0.0     -20.0      0.00      0.00      0.00 
+            8       0.0       0.0     -20.0      0.00      0.00      0.00 
+ 
+      SOFiSTiK AG - Educational-Version -
+      ASE    - ADVANCED SOLUTION ENGINE V 2018-7.0          6/28/19          Page:    55
+ 
+      Elements
+      CALCULATIONS
+ 
+ 
+      Sum of Reactions and Loadings                                                              
+      Loadcase            Σ(Reactions)             Designation                            
+                     X[kN]       Y[kN]       Z[kN]                                        
+                            Σ(Loads)                                                      
+             1         0.0         0.0       -80.0 sum_PZ= 80.00 kN               .       
+                       0.0         0.0        80.0                                        
+ 
