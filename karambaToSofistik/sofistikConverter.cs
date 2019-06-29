@@ -21,6 +21,8 @@ namespace karambaToSofistik
     public class 
         sofistikConverter
     {
+        public int beamDiv;
+
         //Stringbuilders
         int _instruct_count = 1;
         private StringBuilder _product = new StringBuilder();
@@ -324,7 +326,7 @@ namespace karambaToSofistik
             if (beamStart && beamEnd && beamCros)
             {
                 _elem_inst.Add(beam.ind, beamNO);
-                addInstruction("BEAM NO " + beamNO + " NA " + startNode + " NE " + endNode + " NCS " + beamCrossection);
+                addInstruction("BEAM NO " + beamNO + " NA " + startNode + " NE " + endNode + " NCS " + beamCrossection + " DIV " + beamDiv);
             }
             else
             {

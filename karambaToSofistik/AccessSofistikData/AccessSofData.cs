@@ -12,6 +12,11 @@ namespace karambaToSofistik.AccessSofistik
     {
 
         public static List<string> SofBeamForces = new List<string>();
+        public static List<double> SofBeamN = new List<double>();
+        public static List<double> SofBeamVy = new List<double>();
+        public static List<double> SofBeamVz = new List<double>();
+        public static List<double> SofBeamMy = new List<double>();
+        public static List<double> SofBeamMz = new List<double>();
         public static StringBuilder _status = new StringBuilder();
 
 
@@ -60,13 +65,18 @@ namespace karambaToSofistik.AccessSofistik
             int index_,
             int kwh_,
             int kwl_,
-            ref beamForces data_,
+            ref cs_beam_for data_,
             ref int recLen_,
             int pos);
 
         public static unsafe void Main(string ghpath)
         {
             SofBeamForces.Clear();
+            SofBeamN.Clear();
+            SofBeamMy.Clear();
+            SofBeamMz.Clear();
+            SofBeamVy.Clear();
+            SofBeamVz.Clear();
             _status.Clear();
 
             int index = 0;
@@ -81,11 +91,10 @@ namespace karambaToSofistik.AccessSofistik
             string path = Environment.GetEnvironmentVariable("path");
 
             // Set the new path environment variable + SOFiSTiK dlls path
-            path = directory1 + ";" + path;
+            string envPath = directory1 + ";" + path;
 
             // Set the path variable (to read the data from CDB)
-            System.Environment.SetEnvironmentVariable("path", path);
-
+            System.Environment.SetEnvironmentVariable("path", envPath);
             // connect to CDB
             index = sof_cdb_init(cdbPath, 99);
             // check if sof_cdb_flush is working
@@ -95,8 +104,8 @@ namespace karambaToSofistik.AccessSofistik
                 _status.Append("Database connected.");
 
 
-            beamForces getBeamForces = new karambaToSofistik.AccessSofistik.beamForces();
-            datalen = Marshal.SizeOf(typeof(karambaToSofistik.AccessSofistik.beamForces));
+            cs_beam_for getBeamForces = new karambaToSofistik.AccessSofistik.cs_beam_for();
+            datalen = Marshal.SizeOf(typeof(karambaToSofistik.AccessSofistik.cs_beam_for));
 
             int pos = 1;
 
@@ -104,12 +113,36 @@ namespace karambaToSofistik.AccessSofistik
             {
                 if (sof_cdb_get(index, 102, 1, ref getBeamForces, ref datalen, pos) == 0)
                 {
-                    SofBeamForces.Add("Beam: " + getBeamForces.m_id.ToString() + " Normal Force:" + getBeamForces.m_n.ToString());
+                    if (getBeamForces.m_nr == 0)
+                        {
+                            SofBeamForces.Add("Superpositioned Maximum Beam Forces"
+                            + "\n\nN: " + Math.Round(getBeamForces.m_n, 3).ToString() + " kN "
+                            + "\nMy: " + Math.Round(getBeamForces.m_my, 3).ToString() + " kNm "
+                            + "\nMz: " + Math.Round(getBeamForces.m_mz, 3).ToString() + " kNm "
+                            + "\nVy: " + Math.Round(getBeamForces.m_vy, 3).ToString() + " kN "
+                            + "\nVz: " + Math.Round(getBeamForces.m_vz, 3).ToString() + " kN \n");
+                        }
+                    else
+                    {
+                        SofBeamForces.Add("Beam: " + (getBeamForces.m_nr - 1).ToString() //Convert beam number back to Karamba
+                        + "\n\nN: " + Math.Round(getBeamForces.m_n, 3).ToString() + " kN "
+                        + "\nMy: " + Math.Round(getBeamForces.m_my, 3).ToString() + " kNm "
+                        + "\nMz: " + Math.Round(getBeamForces.m_mz, 3).ToString() + " kNm "
+                        + "\nVy: " + Math.Round(getBeamForces.m_vy, 3).ToString() + " kN "
+                        + "\nVz: " + Math.Round(getBeamForces.m_vz, 3).ToString() + " kN \n");
+
+                            SofBeamN.Add(getBeamForces.m_n);
+                            SofBeamVy.Add(getBeamForces.m_vy);
+                            SofBeamVz.Add(getBeamForces.m_vz);
+                            SofBeamMy.Add(getBeamForces.m_my);
+                            SofBeamMz.Add(getBeamForces.m_mz);
+                    }
+
 
 
                 }
 
-                datalen = Marshal.SizeOf(typeof(karambaToSofistik.AccessSofistik.beamForces));
+                datalen = Marshal.SizeOf(typeof(karambaToSofistik.AccessSofistik.cs_beam_for));
 
             }
                 _status.Append("\nBeam forces extracted.");
@@ -132,6 +165,9 @@ namespace karambaToSofistik.AccessSofistik
             // use sof_cdb_flush() and sof_cdb_close()
             sof_cdb_flush(index);
             sof_cdb_close(0);   // close the CDB
+
+            System.Environment.SetEnvironmentVariable("path", null); //Delete environment variables
+
             _status.Append("\nDatabase closed.");
 
             // Output the status after closing the CDB

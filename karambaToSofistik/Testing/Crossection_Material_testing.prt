@@ -1,37 +1,37 @@
-   *** Start: Program SPS - Version 2018-7.0
-   *** Start: Program AQUA urs:1 $Materials and cross-sections   
+   *** Start: Program WPS - Version 2018-7.0
+   *** Start: Program AQUA : Material and cross-section definitions   
    SOFiSTiK 2018-7.0.9    AQUA   - GENERAL SECTIONS
    Output on file Crossection_Material_testing.plb
-   Project data base Crossection_Material_testing.cdb -    44. access
+   Project data base Crossection_Material_testing.cdb -    22. access
    Project: Elements
    TIME NEEDED         1, TOTAL         1
-   DATE       2019-06-28, 18:20:09
-   *** Stop : Program AQUA urs:1 $Materials and cross-sections
+   DATE       2019-06-29, 02:06:50
+   *** Stop : Program AQUA : Material and cross-section definitions
 
-   *** Start: Program SOFIMSHA urs:2   
+   *** Start: Program SOFIMSHA : Elements   
    SOFiSTiK 2018-7.0.9    SOFIMSHA - IMPORT/EXPORT FEM
    Output on file Crossection_Material_testing.plb
-   Project data base Crossection_Material_testing.cdb -    45. access
+   Project data base Crossection_Material_testing.cdb -    23. access
    Project: Elements
    Workspace                    38.1 Megabyte
    TIME NEEDED         1, TOTAL         1
-   DATE       2019-06-28, 18:20:10
-   *** Stop : Program SOFIMSHA urs:2
+   DATE       2019-06-29, 02:06:51
+   *** Stop : Program SOFIMSHA : Elements
 
-   *** Start: Program SOFILOAD   
+   *** Start: Program SOFILOAD : LOADING   
    SOFiSTiK 2018-7.0.9    SOFILOAD - LOAD GENERATOR
    Output on file Crossection_Material_testing.plb
-   Project data base Crossection_Material_testing.cdb -    46. access
+   Project data base Crossection_Material_testing.cdb -    24. access
    Project: Elements
    TIME NEEDED         1, TOTAL         1
    TIME NEEDED         0, TOTAL         1
-   DATE       2019-06-28, 18:20:12
-   *** Stop : Program SOFILOAD
+   DATE       2019-06-29, 02:06:53
+   *** Stop : Program SOFILOAD : LOADING
 
-   *** Start: Program ASE   
+   *** Start: Program ASE : CALCULATIONS   
    SOFiSTiK 2018-7.0.9    ASE   - ADVANCED SOLUTION ENGINE
    Output on file Crossection_Material_testing.plb
-   Project data base Crossection_Material_testing.cdb -    47. access
+   Project data base Crossection_Material_testing.cdb -    25. access
    Project: Elements
    load case     1
    
@@ -42,6 +42,6 @@
    Total entries after fill        158
    TIME NEEDED         2, TOTAL         2
    TIME NEEDED         0, TOTAL         2
-   DATE       2019-06-28, 18:20:14
-   *** Stop : Program ASE
+   DATE       2019-06-29, 02:06:55
+   *** Stop : Program ASE : CALCULATIONS
    *** End of Calculation!

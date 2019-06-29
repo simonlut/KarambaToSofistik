@@ -21,13 +21,7 @@ namespace karambaToSofistik
 
     public class karambaToSofistikComponent : GH_Component
     {
-        /// <summary>
-        /// Each implementation of GH_Component must provide a public 
-        /// constructor without any arguments.
-        /// Category represents the Tab in which the component will appear, 
-        /// Subcategory the panel. If you use non-existing tab or panel names, 
-        /// new tabs/panels will automatically be created.
-        /// </summary>
+
         public karambaToSofistikComponent()
           : base("karambaToSofistik", "KarSof",
               "Export simple beam structures to Sofistik and visualize basic results in Grasshopper.",
@@ -41,6 +35,7 @@ namespace karambaToSofistik
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddParameter(new Param_Model(), "Model", "Model", "Karamba Model", GH_ParamAccess.item);
+            pManager.AddIntegerParameter("Beam Division", "Beam Division", "Amount of times beams are split for FEA.", GH_ParamAccess.item, 5);
         }
 
         /// <summary>
@@ -61,8 +56,20 @@ namespace karambaToSofistik
         {
             sofistikConverter sofistikConverter = new sofistikConverter();
             Model iKarambaModel = null;
+            int iBeamDiv = 1;
 
             DA.GetData(0, ref iKarambaModel);
+            DA.GetData(1, ref iBeamDiv);
+
+            if (iBeamDiv > 0)
+            {
+                sofistikConverter.beamDiv = iBeamDiv;
+
+            }
+            else
+            {
+                AddRuntimeMessage(GH_RuntimeMessageLevel.Warning, "Beam division should have a positive integer.");
+            }
 
             Karamba.Models.Model karambaModel = (Karamba.Models.Model) iKarambaModel;
 
@@ -107,11 +114,10 @@ namespace karambaToSofistik
         /// </summary>
         protected override System.Drawing.Bitmap Icon
         {
+            //get { return Resource.Icon; }
             get
             {
-                // You can add image files to your project resources and access them like this:
-                //return Resources.IconForThisComponent;
-                return null;
+                return Properties.Resources.icon;
             }
         }
 

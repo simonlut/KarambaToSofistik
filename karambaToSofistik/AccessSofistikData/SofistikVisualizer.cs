@@ -39,6 +39,11 @@ namespace karambaToSofistik
         protected override void RegisterOutputParams(GH_Component.GH_OutputParamManager pManager)
         {
             pManager.Register_StringParam("Beam Forces", "Beam Forces", "Beam forces extracted from Sofistik.", GH_ParamAccess.list);
+            pManager.Register_DoubleParam("N", "N", "Normal forces. [kN]");
+            pManager.Register_DoubleParam("Vy", "Vy", "Shear force. [kN]");
+            pManager.Register_DoubleParam("Vz", "Vz", "Shear force. [kN]");
+            pManager.Register_DoubleParam("My", "My", "Bending moment [kNm]");
+            pManager.Register_DoubleParam("Mz", "Mz", "Bending Moment [kNm]");
             pManager.Register_StringParam("Status", "Status", "Status of connection to Sofistik Database (cbd). ");
         }
 
@@ -62,16 +67,28 @@ namespace karambaToSofistik
                 //Initialize database access
                 karambaToSofistik.AccessSofistik.AccessSofData.Main(cdbFilePath);
 
+                List<double> oN = AccessSofistik.AccessSofData.SofBeamN;
+                List<double> oVz = AccessSofistik.AccessSofData.SofBeamVz;
+                List<double> oVy = AccessSofistik.AccessSofData.SofBeamVy;
+                List<double> oMz = AccessSofistik.AccessSofData.SofBeamMz;
+                List<double> oMy = AccessSofistik.AccessSofData.SofBeamMy;
+
+
                 if (AccessSofistik.AccessSofData.SofBeamForces.Count != 0)
                 {
                     DA.SetDataList(0, AccessSofistik.AccessSofData.SofBeamForces);
-                    DA.SetData(1, AccessSofistik.AccessSofData._status.ToString());
+                    DA.SetDataList(1, oN);
+                    DA.SetDataList(2, oVz);
+                    DA.SetDataList(3, oVy);
+                    DA.SetDataList(4, oMz);
+                    DA.SetDataList(5, oMy);
+                    DA.SetData(6, AccessSofistik.AccessSofData._status.ToString());
                     return;
                 }
                 else
                 {
                     AddRuntimeMessage(GH_RuntimeMessageLevel.Error, "No beamforces found.");
-                    DA.SetData(1, AccessSofistik.AccessSofData._status.ToString());
+                    DA.SetData(6, AccessSofistik.AccessSofData._status.ToString());
 
                 }
 
@@ -86,13 +103,13 @@ namespace karambaToSofistik
         /// </summary>
         protected override System.Drawing.Bitmap Icon
         {
+            //get { return Resource.Icon; }
             get
             {
-                //You can add image files to your project resources and access them like this:
-                // return Resources.IconForThisComponent;
-                return null;
+                return Properties.Resources.icon;
             }
         }
+
 
         /// <summary>
         /// Gets the unique ID for this component. Do not change this ID after release.
