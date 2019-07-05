@@ -10,7 +10,7 @@ namespace karambaToSofistik
         {
             get
             {
-                return "karambaToSofistik";
+                return "KarambaToSofistik";
             }
         }
         public override Bitmap Icon
@@ -26,7 +26,7 @@ namespace karambaToSofistik
             get
             {
                 //Return a short string describing the purpose of this GHA library.
-                return "";
+                return "Export possibilities from Karamba to Sofistik.";
             }
         }
         public override Guid Id
@@ -42,7 +42,7 @@ namespace karambaToSofistik
             get
             {
                 //Return a string identifying you or your company.
-                return "HP Inc.";
+                return "Simon Lut";
             }
         }
         public override string AuthorContact
@@ -50,7 +50,7 @@ namespace karambaToSofistik
             get
             {
                 //Return a string representing your preferred contact details.
-                return "";
+                return "simonj.lut@gmail.com";
             }
         }
     }

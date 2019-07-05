@@ -5,6 +5,7 @@ using Karamba.Materials;
 using Karamba.Models;
 using Karamba.Nodes;
 using Karamba.Supports;
+using Karamba.CrossSections;
 using System;
 using System.Collections.Generic;
 
@@ -84,6 +85,7 @@ namespace karambaToSofistik
             foreach (ModelElement beam in m.elems)
             {
                 sc.convertElem(beam, m);
+
             }
             sc.setLog("\n" + m.elems.Count + " elements converted.");
 
@@ -91,51 +93,53 @@ namespace karambaToSofistik
             sc.endSection();
             sc.setLog("\nSofimshA converted.");
 
-
-            //******************************************************************************************************************************************************
-            // SOFILOAD
-            //******************************************************************************************************************************************************
-
-            sc.initSofiload();
-
-            // Add gravity loads
-            foreach(GravityLoad gload in m.gravities.Values)
+            if (m.ploads.Count != 0 || m.gravities.Values.Count != 0 || m.eloads.Count != 0)
             {
-                sc.addGload(gload, m);
+                //******************************************************************************************************************************************************
+                // SOFILOAD
+                //******************************************************************************************************************************************************
+
+                sc.initSofiload();
+
+                // Add gravity loads
+                foreach (GravityLoad gload in m.gravities.Values)
+                {
+                    sc.addGload(gload, m);
+                }
+                sc.setLog("\n" + m.gravities.Values.Count + " gravity loads added.");
+
+                // Add point loads
+                foreach (PointLoad pload in m.ploads)
+                {
+                    sc.addPload(pload, m);
+                }
+                sc.setLog("\n" + m.ploads.Count + " point loads added.");
+
+
+                // Add element loads
+                foreach (ElementLoad eload in m.eloads)
+                {
+                    sc.addEload(eload);
+                }
+                sc.setLog("\n" + m.eloads.Count + " element loads added.");
+
+
+                sc.convertLoads();
+                sc.setLog("\nLoads converted to Sofistik format.");
+
+
+                sc.endSection();
+                sc.setLog("\nSofiload converted.");
+
+
+                //******************************************************************************************************************************************************
+                // ASE
+                //******************************************************************************************************************************************************
+
+                sc.initASE();
+                sc.endSection();
+                sc.setLog("\nASE converted.");
             }
-            sc.setLog("\n" + m.gravities.Values.Count + " gravity loads added.");
-
-            // Add point loads
-            foreach (PointLoad pload in m.ploads)
-            {
-                sc.addPload(pload, m);
-            }
-            sc.setLog("\n" + m.ploads.Count + " point loads added.");
-
-
-            // Add element loads
-            foreach (ElementLoad eload in m.eloads)
-            {
-                sc.addEload(eload);
-            }
-            sc.setLog("\n" + m.eloads.Count + " element loads added.");
-
-
-            sc.convertLoads();
-            sc.setLog("\nLoads converted to Sofistik format.");
-
-
-            sc.endSection();
-            sc.setLog("\nSofiload converted.");
-
-
-            //******************************************************************************************************************************************************
-            // ASE
-            //******************************************************************************************************************************************************
-
-            sc.initASE();
-            sc.endSection();
-            sc.setLog("\nASE converted.");
 
         }
 

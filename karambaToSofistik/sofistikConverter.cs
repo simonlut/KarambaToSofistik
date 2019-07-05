@@ -21,7 +21,10 @@ namespace karambaToSofistik
     public class 
         sofistikConverter
     {
+        //Beam properties
         public int beamDiv;
+        private string beamId;
+        private int grpInd = 1;
 
         //Stringbuilders
         int _instruct_count = 1;
@@ -35,6 +38,7 @@ namespace karambaToSofistik
         protected Dictionary<int, int> _loadcase_inst = new Dictionary<int, int>();
         private Dictionary<int, int> _elem_inst = new Dictionary<int, int>();
         private Dictionary<int, string> _support_inst = new Dictionary<int, string>();
+        private Dictionary<int, string> _joint_inst = new Dictionary<int, string>();
 
         //Loadtables
         private DataTable _gloads_table = new DataTable();
@@ -66,12 +70,12 @@ namespace karambaToSofistik
 
         }
 
-        //Sofimesh A definition
+        //Sofimsh A definition
         public void initSofimsha()
         {
             _log.Append("\n\nInitiate SofimshA...");
 
-            addInstruction("\n+PROG SOFIMSHA urs:2\nHEAD Elements\nUNIT 5\nSYST TYPE 3D GDIR NEGZ GDIV 1000\n");
+            addInstruction("\n+PROG SOFIMSHA urs:2\nHEAD Elements\nUNIT 5\nSYST TYPE 3D GDIR NEGZ GDIV -1000\n");
 
         }
 
@@ -115,7 +119,7 @@ namespace karambaToSofistik
             uint materialId = 0;
             string crosecName;
 
-            if (_mat_inst.TryGetValue(crosec.material.guid, out uint value))
+            if (crosec is CroSec_Beam && _mat_inst.TryGetValue(crosec.material.guid, out uint value))
             {
                 materialId = value;
                 switch (crosec.shape())
@@ -225,10 +229,11 @@ namespace karambaToSofistik
                 }
 
             }
+
             else
             {
-                _log.Append("No material defined");
-                _warnings.Add("No material defined");
+                _log.Append("Cross-section of type: " + crosec.GetType() + " not yet supported.");
+                _warnings.Add("Cross-section of type: " + crosec.GetType() + " not yet supported.");
             }
         }
 
@@ -297,6 +302,7 @@ namespace karambaToSofistik
 
         }
 
+
         //Convert elements (just beams for now)
         public void convertElem(ModelElement elem, Model karambaModel)
         {
@@ -322,11 +328,82 @@ namespace karambaToSofistik
             bool beamStart = _node_inst.TryGetValue(beam.node_inds[0], out int startNode);
             bool beamEnd = _node_inst.TryGetValue(beam.node_inds[1], out int endNode);
             bool beamCros = _crosec_inst.TryGetValue(beam.crosec.guid, out int beamCrossection);
+            string beamJoint = "";
+                        
+
+            if (beam.joint != null)
+            {
+                double?[] _jointConditions = beam.joint.c;
+                string _ahin = "";
+                string _ehin = "";
+
+                for (int i = 0; i < 6; i++)
+                {
+                    if (_jointConditions[i].HasValue)
+                    {
+                        _ahin = " AHIN ";
+                    }
+                }
+                if( _ahin != "")
+                {
+                    if (_jointConditions[0].HasValue) { _ahin += "N"; }
+                    if (_jointConditions[1].HasValue) { _ahin += "VY"; }
+                    if (_jointConditions[2].HasValue) { _ahin += "VZ"; }
+                    if (_jointConditions[3].HasValue) { _ahin += "MT"; }
+                    if (_jointConditions[4].HasValue) { _ahin += "MY"; }
+                    if (_jointConditions[5].HasValue) { _ahin += "MZ"; }
+                }
+
+                for (int i = 6; i < 12; i++)
+                {
+                    if (_jointConditions[i].HasValue)
+                    {
+                        _ehin = " EHIN ";
+                    }
+                }
+                if (_ehin != "")
+                {
+                    if (_jointConditions[6].HasValue) { _ehin += "N"; }
+                    if (_jointConditions[7].HasValue) { _ehin += "VY"; }
+                    if (_jointConditions[8].HasValue) { _ehin += "VZ"; }
+                    if (_jointConditions[9].HasValue) { _ehin += "MT"; }
+                    if (_jointConditions[10].HasValue) { _ehin += "MY"; }
+                    if (_jointConditions[11].HasValue) { _ehin += "MZ"; }
+                }
+
+                if(_ahin != "" || _ehin != "")
+                {
+                    beamJoint = _ahin + _ehin;
+                    _joint_inst.Add(beam.ind, beamJoint);
+
+                }
+
+            }
+
+            
+
+            if (beam.id != "")
+            {
+                string beamName = beam.id;
+                if (beamName != beamId)
+                {
+                    addInstruction("\nGRP " + grpInd + " TITL " + "\"" + beamName + "\"");
+                    beamId = beamName;
+                    grpInd++;
+                }
+            }
 
             if (beamStart && beamEnd && beamCros)
             {
                 _elem_inst.Add(beam.ind, beamNO);
-                addInstruction("BEAM NO " + beamNO + " NA " + startNode + " NE " + endNode + " NCS " + beamCrossection + " DIV " + beamDiv);
+                if(beamDiv < 2)
+                {
+                    addInstruction("BEAM NO " + beamNO + " NA " + startNode + " NE " + endNode + " NCS " + beamCrossection + beamJoint);
+                }
+                else
+                {
+                    addInstruction("BEAM NO " + beamNO + "0 NA " + startNode + " NE " + endNode + " NCS " + beamCrossection + " DIV " + beamDiv + " NM 0 " + beamJoint );
+                }
             }
             else
             {

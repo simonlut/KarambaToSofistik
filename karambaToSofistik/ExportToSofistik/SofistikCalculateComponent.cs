@@ -15,9 +15,7 @@ namespace karambaToSofistik
 {
     public class SofistikExportOptions : GH_Component
     {
-        /// <summary>
-        /// Initializes a new instance of the SofistikExportOptions class.
-        /// </summary>
+
         public SofistikExportOptions()
           : base("Calculate Sofistik", "Calc Sof",
               "Calculation settings for Sofistik model",
@@ -25,15 +23,19 @@ namespace karambaToSofistik
         {
         }
 
-        /// <summary>
-        /// Registers all the input parameters for this component.
-        /// </summary>
+        public string sofistikPath = "";
+
         protected override void RegisterInputParams(GH_Component.GH_InputParamManager pManager)
         {
             pManager.AddTextParameter("Sofistik", "Sofistik", "Text output from sofistik converter", GH_ParamAccess.item);
             pManager.AddBooleanParameter("Calculate", "Calculate", "Calculate structure directly in Sofistik", GH_ParamAccess.item);
             pManager.AddBooleanParameter("Open Teddy", "Open Teddy", "Open the teddy file that was just created", GH_ParamAccess.item, false);
             pManager.AddGenericParameter("Solver Options", "Solver Option", "Choose the order of the solver and the settings", GH_ParamAccess.item);
+            if (!Directory.Exists(@"C:/Program Files/SOFiSTiK/2018/SOFiSTiK 2018"))
+            {
+                pManager.AddTextParameter("Sofistik Main Folder", "Sofistik Main Folder", "Give the path to the main Sofistik folder (containing sps.exe)", GH_ParamAccess.item);
+            }
+
         }
 
         /// <summary>
@@ -50,7 +52,7 @@ namespace karambaToSofistik
         /// <param name="DA">The DA object is used to retrieve from inputs and store in outputs.</param>
         protected override void SolveInstance(IGH_DataAccess DA)
         {
-            string iSofText = "";
+            string iSofText = @"C:/Program Files/SOFiSTiK/2018/SOFiSTiK 2018";
             bool iCalculate = false;
             bool iTeddy = false;
             
@@ -58,6 +60,12 @@ namespace karambaToSofistik
             DA.GetData(0, ref iSofText);
             DA.GetData(1, ref iCalculate);
             DA.GetData(2, ref iTeddy);
+            if (!Directory.Exists(@"C:/Program Files/SOFiSTiK/2018/SOFiSTiK 2018"))
+            {
+
+                DA.GetData(4, ref sofistikPath);
+            }
+
             GH_Document ghDoc = OnPingDocument();
 
             if (ghDoc != null)
@@ -122,7 +130,7 @@ namespace karambaToSofistik
             System.Diagnostics.Process process = new System.Diagnostics.Process();
             System.Diagnostics.ProcessStartInfo startInfo = new System.Diagnostics.ProcessStartInfo();
             startInfo.FileName = "cmd.exe";
-            startInfo.Arguments = "/c cd C:/Program Files/SOFiSTiK/2018/SOFiSTiK 2018/ & sps -B \"" + targetPath + "\"";
+            startInfo.Arguments = "/c cd C:/Program Files/SOFiSTiK/2018/SOFiSTiK 2018 & sps -B \"" + targetPath + "\"";
 
             process.StartInfo = startInfo;
             process.Start();

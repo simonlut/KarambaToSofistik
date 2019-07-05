@@ -36,6 +36,7 @@ namespace karambaToSofistik
         {
             pManager.AddParameter(new Param_Model(), "Model", "Model", "Karamba Model", GH_ParamAccess.item);
             pManager.AddIntegerParameter("Beam Division", "Beam Division", "Amount of times beams are split for FEA.", GH_ParamAccess.item, 5);
+
         }
 
         /// <summary>
@@ -60,6 +61,7 @@ namespace karambaToSofistik
 
             DA.GetData(0, ref iKarambaModel);
             DA.GetData(1, ref iBeamDiv);
+
 
             if (iBeamDiv > 0)
             {
